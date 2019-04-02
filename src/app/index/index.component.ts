@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+
+declare let $: any;
+declare let jQuery: any;
 
 @Component({
   selector: 'app-index',
@@ -7,9 +10,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    $(window).load(function () {
+      $('.flexslider').flexslider({
+        animation: 'slide',
+        start: function (slider) {
+          $('body').removeClass('loading');
+        }
+      });
+    });
+    $(function () {
+      $('#slider').responsiveSlides({
+        auto: true,
+        pager: false,
+        nav: true,
+        speed: 1000,
+        namespace: 'callbacks',
+        before: function () {
+          $('.events').append('<li>before event fired.</li>');
+        },
+        after: function () {
+          $('.events').append('<li>after event fired.</li>');
+        }
+      });
+    });
+    $('document').ready(function () {
+      $('#video').simplePlayer();
+    });
   }
 
 }
